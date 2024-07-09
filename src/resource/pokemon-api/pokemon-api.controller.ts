@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { PokemonApiService } from 'src/service/pokemon-api.service';
 import { CharService } from '../char/char.service';
 import SuccessDataResult from 'src/model/successDataResult';
 import { CreateCharDto } from '../char/dto/create-char.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth('jwt')
+@ApiTags('/pokemon-api')
 @Controller('pokemon-api')
 export class PokemonApiController {
   constructor(private readonly pokemonApiService: PokemonApiService,
@@ -52,9 +55,4 @@ export class PokemonApiController {
     return new SuccessDataResult('', savedPokemons);
 
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.pokemonApiService.findOne(+id);
-  // }
 }

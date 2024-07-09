@@ -14,9 +14,7 @@ export class CharAbilityService {
 
   async save(createDto: CreateCharAbilityDto) {
     try{
-      console.log("d")
-      let charAbility = await this.findOneByCondition({abilityName: createDto.abilityName});
-      console.log(charAbility)
+      let charAbility = await this.findOne({abilityName: createDto.abilityName});
       if(!charAbility.status){
         return charAbility;
       } else if(charAbility.data){
@@ -48,18 +46,9 @@ export class CharAbilityService {
     }
   }
 
-  async findOne(id: string) {
-    try{
-      let result = await this.repository.findOne(id);
-      return new SuccessDataResult('', result);
-    }catch{
-      return new ErrorDataResult('', null);
-    }
-  }
-
-  async findOneByCondition(condition: FilterCharAbilityDto) {
+  async findOne(condition: FilterCharAbilityDto) {
     try {
-      const result = await this.repository.findOneByCondition(condition);
+      const result = await this.repository.findOne(condition);
       return new SuccessDataResult('', result);
     } catch (error) {
       return new ErrorDataResult('', null);

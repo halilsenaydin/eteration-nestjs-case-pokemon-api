@@ -27,7 +27,7 @@ export class CharService {
   async save(createCharDto: CreateCharDto) {
     try {
       // Exist char
-      let char = await this.findOneByCondition({ name: createCharDto.name });
+      let char = await this.findOne({ name: createCharDto.name });
       if (!char.status) {
         return char;
       } else if (char.data) {
@@ -93,23 +93,33 @@ export class CharService {
     }
   }
 
-  async findOne(id: string) {
+  async findAllDto() {
     try {
-      let result = await this.repository.findOne(id);
+      let result = await this.repository.findAllDto();
       return new SuccessDataResult('', result);
     } catch {
       return new ErrorDataResult('', null);
     }
   }
 
-  async findOneByCondition(condition: FilterCharDto) {
+  async findOne(condition: FilterCharDto) {
     try {
-      const result = await this.repository.findOneByCondition(condition);
+      const result = await this.repository.findOne(condition);
       return new SuccessDataResult('', result);
     } catch (error) {
       return new ErrorDataResult('', null);
     }
   }
+
+  async findOneDto(condition: FilterCharDto) {
+    try {
+      const result = await this.repository.findOneDto(condition);
+      return new SuccessDataResult('', result);
+    } catch (error) {
+      return new ErrorDataResult('', null);
+    }
+  }
+
 
   async update(id: string, updateCharDto: UpdateCharDto) {
     try {

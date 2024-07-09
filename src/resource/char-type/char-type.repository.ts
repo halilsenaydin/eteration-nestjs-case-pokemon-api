@@ -30,11 +30,7 @@ export class CharTypeRepository {
     return result;
   }
 
-  findOne(id: string): Promise<CharType> {
-    return this._repository.findOneBy({ id });
-  }
-
-  findOneByCondition(condition: FilterCharTypeDto): Promise<CharType> {
+  findOne(condition: FilterCharTypeDto): Promise<CharType> {
     return this._repository.findOneBy(condition);
   }
 

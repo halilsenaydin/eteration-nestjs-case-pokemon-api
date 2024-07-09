@@ -30,12 +30,38 @@ export class CharRepository {
     return result;
   }
 
-  findOne(id: string): Promise<Char> {
-    return this._repository.findOneBy({ id });
+  findAllDto(): Promise<Char[]> {
+    let result = this._repository
+      .createQueryBuilder('char')
+      .innerJoinAndSelect('char.abilitiesOfChar', 'abilityOfChar')
+      .innerJoinAndSelect('abilityOfChar.ability', 'charAbility')
+      .innerJoinAndSelect('char.typesOfChar', 'typeOfChar')
+      .innerJoinAndSelect('typeOfChar.type', 'charType')
+      .getMany();
+    
+    return result;
   }
 
-  findOneByCondition(condition: FilterCharDto): Promise<Char> {
+  findOne(condition: FilterCharDto): Promise<Char> {
     return this._repository.findOneBy(condition);
+  }
+
+  findOneDto(condition: FilterCharDto): Promise<Char> {
+    const queryBuilder = this._repository.createQueryBuilder('char');
+
+    Object.keys(condition).forEach((key) => {
+      if (condition[key] !== undefined) {
+        queryBuilder.andWhere(`char.${key} = :${key}`, { [key]: condition[key] });
+      }
+    });
+
+    queryBuilder
+      .innerJoinAndSelect('char.abilitiesOfChar', 'abilityOfChar')
+      .innerJoinAndSelect('abilityOfChar.ability', 'charAbility')
+      .innerJoinAndSelect('char.typesOfChar', 'typeOfChar')
+      .innerJoinAndSelect('typeOfChar.type', 'charType');
+
+    return queryBuilder.getOne();
   }
 
   update(id: string, char: UpdateCharDto): Promise<UpdateResult> {

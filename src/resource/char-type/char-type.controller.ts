@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CharTypeService } from './char-type.service';
 import { CreateCharTypeDto } from './dto/create-char-type.dto';
 import { UpdateCharTypeDto } from './dto/update-char-type.dto';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth('jwt')
+@ApiTags('/char-type')
 @Controller('char-type')
 export class CharTypeController {
   constructor(private readonly charTypeService: CharTypeService) {}
@@ -17,9 +20,10 @@ export class CharTypeController {
     return this.charTypeService.findAll();
   }
 
+  @ApiParam({ name: 'id', example: '3a2bff0a-c110-4fa9-838a-ce419278883d', description: 'The id of the char type' })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.charTypeService.findOne(id);
+    return this.charTypeService.findOne({id: id});
   }
 
   @Patch(':id')

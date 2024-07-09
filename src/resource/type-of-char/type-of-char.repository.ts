@@ -3,6 +3,7 @@ import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { TypeOfChar } from './entities/type-of-char.entity';
 import { CreateTypeOfCharDto } from './dto/create-type-of-char.dto';
 import { UpdateTypeOfCharDto } from './dto/update-type-of-char.dto';
+import { FilterTypeOfCharDto } from './dto/filter-type-of-char.dto';
 
 @Injectable()
 export class TypeOfCharRepository {
@@ -29,8 +30,8 @@ export class TypeOfCharRepository {
     return result;
   }
 
-  findOne(id: string): Promise<TypeOfChar> {
-    return this._repository.findOneBy({ id });
+  findOne(condition: FilterTypeOfCharDto): Promise<TypeOfChar> {
+    return this._repository.findOneBy(condition);
   }
 
   update(id: string, char: UpdateTypeOfCharDto): Promise<UpdateResult> {

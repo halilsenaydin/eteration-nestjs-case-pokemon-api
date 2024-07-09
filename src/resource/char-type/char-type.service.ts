@@ -14,7 +14,7 @@ export class CharTypeService {
 
   async save(createDto: CreateCharTypeDto) {
     try{
-      let charType = await this.findOneByCondition({typeName: createDto.typeName});
+      let charType = await this.findOne({typeName: createDto.typeName});
       if(!charType.status){
         return charType;
       } else if(charType.data){
@@ -46,18 +46,9 @@ export class CharTypeService {
     }
   }
 
-  async findOne(id: string) {
-    try{
-      let result = await this.repository.findOne(id);
-      return new SuccessDataResult('', result);
-    }catch{
-      return new ErrorDataResult('', null);
-    }
-  }
-
-  async findOneByCondition(condition: FilterCharTypeDto) {
+  async findOne(condition: FilterCharTypeDto) {
     try {
-      const result = await this.repository.findOneByCondition(condition);
+      const result = await this.repository.findOne(condition);
       return new SuccessDataResult('', result);
     } catch (error) {
       return new ErrorDataResult('', null);

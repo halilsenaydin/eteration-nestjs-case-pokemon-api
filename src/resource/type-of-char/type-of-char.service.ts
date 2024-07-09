@@ -4,6 +4,7 @@ import { UpdateTypeOfCharDto } from './dto/update-type-of-char.dto';
 import SuccessDataResult from 'src/model/successDataResult';
 import ErrorDataResult from 'src/model/errorDataResult';
 import { TypeOfCharRepository } from './type-of-char.repository';
+import { FilterTypeOfCharDto } from './dto/filter-type-of-char.dto';
 
 @Injectable()
 export class TypeOfCharService {
@@ -38,9 +39,9 @@ export class TypeOfCharService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(condition: FilterTypeOfCharDto) {
     try{
-      let result = await this.repository.findOne(id);
+      let result = await this.repository.findOne(condition);
       return new SuccessDataResult('', result);
     }catch{
       return new ErrorDataResult('', null);

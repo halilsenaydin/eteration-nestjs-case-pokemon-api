@@ -4,6 +4,7 @@ import { UpdateAbilityOfCharDto } from './dto/update-ability-of-char.dto';
 import SuccessDataResult from 'src/model/successDataResult';
 import ErrorDataResult from 'src/model/errorDataResult';
 import { AbilityOfCharRepository } from './ability-of-char.repository';
+import { FilterAbilityOfCharDto } from './dto/filter-ability-of-char.dto';
 
 @Injectable()
 export class AbilityOfCharService {
@@ -38,9 +39,9 @@ export class AbilityOfCharService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(condition: FilterAbilityOfCharDto) {
     try{
-      let result = await this.repository.findOne(id);
+      let result = await this.repository.findOne(condition);
       return new SuccessDataResult('', result);
     }catch{
       return new ErrorDataResult('', null);
