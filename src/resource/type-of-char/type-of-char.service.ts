@@ -39,6 +39,33 @@ export class TypeOfCharService {
     }
   }
 
+  async findAllDto() {
+    try{
+      let result = await this.repository.findAllDto();
+      return new SuccessDataResult('', result);
+    }catch{
+      return new ErrorDataResult('', null);
+    }
+  }
+
+  async findAllBy(condition: FilterTypeOfCharDto) {
+    try{
+      let result = await this.repository.findAllBy(condition);
+      return new SuccessDataResult('', result);
+    }catch{
+      return new ErrorDataResult('', null);
+    }
+  }
+
+  async findAllByDto(condition: FilterTypeOfCharDto) {
+    try{
+      let result = await this.repository.findAllByDto(condition);
+      return new SuccessDataResult('', result);
+    }catch{
+      return new ErrorDataResult('', null);
+    }
+  }
+
   async findOne(condition: FilterTypeOfCharDto) {
     try{
       let result = await this.repository.findOne(condition);
@@ -60,6 +87,15 @@ export class TypeOfCharService {
   async remove(id: string) {
     try{
       let result = await this.repository.remove(id);
+      return new SuccessDataResult('', result);
+    }catch{
+      return new ErrorDataResult('', null);
+    }
+  }
+
+  async removeMany(ids: string[]) {
+    try{
+      let result = await this.repository.removeMany(ids);
       return new SuccessDataResult('', result);
     }catch{
       return new ErrorDataResult('', null);

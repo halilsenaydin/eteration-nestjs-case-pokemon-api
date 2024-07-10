@@ -20,6 +20,11 @@ export class AbilityOfCharController {
     return this.abilityOfCharService.findAll();
   }
 
+  @Get("/dto")
+  findAllDto() {
+    return this.abilityOfCharService.findAllDto();
+  }
+
   @ApiParam({ name: 'id', example: '1a7cda5f-b535-48ba-b5e2-e953e5ad5481', description: 'The id of the ability of char' })
   @Get(':id')
   findOne(@Param('id') id: string) {

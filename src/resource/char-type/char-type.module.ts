@@ -9,6 +9,6 @@ import { DatabaseModule } from 'src/database/typeorm/database.module';
   imports: [DatabaseModule],
   controllers: [CharTypeController],
   providers: [CharTypeService, CharTypeRepository, Repository],
-  exports: [CharTypeService]
+  exports: [CharTypeService, CharTypeRepository]
 })
 export class CharTypeModule {}

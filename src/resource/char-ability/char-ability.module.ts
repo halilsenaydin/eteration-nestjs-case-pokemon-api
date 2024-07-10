@@ -9,6 +9,6 @@ import { DatabaseModule } from 'src/database/typeorm/database.module';
   imports: [DatabaseModule],
   controllers: [CharAbilityController],
   providers: [CharAbilityService, CharAbilityRepository, Repository],
-  exports: [CharAbilityService]
+  exports: [CharAbilityService, CharAbilityRepository]
 })
 export class CharAbilityModule {}

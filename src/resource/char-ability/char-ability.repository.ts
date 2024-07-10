@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DataSource, DeleteResult, QueryRunner, Repository, UpdateResult } from 'typeorm';
 import { CharAbility } from './entities/char-ability.entity';
 import { CreateCharAbilityDto } from './dto/create-char-ability.dto';
 import { UpdateCharAbilityDto } from './dto/update-char-ability.dto';
@@ -18,6 +18,10 @@ export class CharAbilityRepository {
     let newChar = this._repository.create(char);
     let result = this._repository.save(newChar);
     return result;
+  }
+
+  saveQueryRunner(char: CreateCharAbilityDto, queryRunner:QueryRunner): Promise<CharAbility> {
+    return queryRunner.manager.save(this._repository.create(char));
   }
 
   saveMany(char: CreateCharAbilityDto[]): Promise<CharAbility[]> {

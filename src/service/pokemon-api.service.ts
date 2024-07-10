@@ -7,14 +7,15 @@ import SuccessDataResult from 'src/model/successDataResult';
 @Injectable()
 export class PokemonApiService {
     private readonly apiUrl = 'https://pokeapi.co/api/v2/pokemon';
-    private readonly pokemonCount = 15;
     constructor(private readonly httpService: HttpService) { }
 
-    async getPokemons() {
+    async getPokemons(startId: number, endId: number) {
+        startId = startId < 1 ? 1 : startId;
+        endId = endId > 150 ? 150 : endId;
         let pokemons: any[] = [];
         try {
             const requests = [];
-            for (let id = 1; id <= this.pokemonCount; id++) {
+            for (let id = startId; id <= endId; id++) {
                 requests.push(firstValueFrom(this.httpService.get(`${this.apiUrl}/${id}`)));
             }
 

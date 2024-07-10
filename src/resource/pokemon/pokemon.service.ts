@@ -1,21 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PokemonApiService } from 'src/service/pokemon-api.service';
 import { CharService } from '../char/char.service';
-import SuccessDataResult from 'src/model/successDataResult';
 import { CreateCharDto } from '../char/dto/create-char.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import SuccessDataResult from 'src/model/successDataResult';
 
-@ApiBearerAuth('jwt')
-@ApiTags('/pokemon-api')
-@Controller('pokemon-api')
-export class PokemonApiController {
-  constructor(private readonly pokemonApiService: PokemonApiService,
+@Injectable()
+export class PokemonService {
+  constructor(
+    private readonly pokemonApiService: PokemonApiService,
     private readonly charService: CharService
   ) {}
 
-  @Get()
-  async savePokemons() {
-    let result = await this.pokemonApiService.getPokemons();
+  async syncSave(startId: number, endId: number) {
+    let result = await this.pokemonApiService.getPokemons(startId, endId);
     if(!result){
       return result;
     }
@@ -46,13 +43,15 @@ export class PokemonApiController {
         });
       }
 
-      let savePokemon = await this.charService.save(createCharDto);
+      let savePokemon = await this.charService.saveOrUpdate(createCharDto);
       if(savePokemon.status){
         savedPokemons.push(savePokemon.data)
+      }else{
+        console.log("Failed: ", pokemon.name, " -> ", savePokemon.message);
       }
     }
     
     return new SuccessDataResult('', savedPokemons);
-
   }
+
 }

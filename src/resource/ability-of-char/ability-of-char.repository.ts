@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DataSource, DeleteResult, QueryRunner, Repository, UpdateResult } from 'typeorm';
 import { AbilityOfChar } from './entities/ability-of-char.entity';
 import { UpdateAbilityOfCharDto } from './dto/update-ability-of-char.dto';
 import { CreateAbilityOfCharDto } from './dto/create-ability-of-char.dto';
@@ -25,9 +25,45 @@ export class AbilityOfCharRepository {
     return result;
   }
 
+  saveManyQueryRunner(char: CreateAbilityOfCharDto[], queryRunner:QueryRunner): Promise<AbilityOfChar[]> {
+    let result = queryRunner.manager.save(this._repository.create(char));
+    return result;
+  }
+
   findAll(): Promise<AbilityOfChar[]> {
     let result = this._repository.find();
     return result;
+  }
+
+  findAllDto(): Promise<AbilityOfChar[]> {
+    let result = this._repository
+      .createQueryBuilder('abilityOfChar')
+      .innerJoinAndSelect('abilityOfChar.char', 'char')
+      .innerJoinAndSelect('abilityOfChar.ability', 'charAbility')
+      .getMany();
+
+    return result;
+  }
+
+  findAllBy(condition: FilterAbilityOfCharDto): Promise<AbilityOfChar[]> {
+    let result = this._repository.findBy(condition);
+    return result;
+  }
+
+  findAllByDto(condition: FilterAbilityOfCharDto): Promise<AbilityOfChar[]> {
+    const queryBuilder = this._repository.createQueryBuilder('abilityOfChar');
+
+    Object.keys(condition).forEach((key) => {
+      if (condition[key] !== undefined) {
+        queryBuilder.andWhere(`abilityOfChar.${key} = :${key}`, { [key]: condition[key] });
+      }
+    });
+
+    queryBuilder
+      .innerJoinAndSelect('abilityOfChar.char', 'char')
+      .innerJoinAndSelect('abilityOfChar.ability', 'charAbility');
+
+    return queryBuilder.getMany();
   }
 
   findOne(condition: FilterAbilityOfCharDto): Promise<AbilityOfChar> {
@@ -40,5 +76,13 @@ export class AbilityOfCharRepository {
 
   remove(id: string): Promise<DeleteResult> {
     return this._repository.delete(id);
+  }
+
+  removeMany(ids: string[]): Promise<DeleteResult> {
+    return this._repository.delete(ids);
+  }
+
+  removeManyQueryRunner(ids: string[], queryRunner:QueryRunner): Promise<DeleteResult> {
+    return queryRunner.manager.delete(AbilityOfChar, ids);
   }
 }

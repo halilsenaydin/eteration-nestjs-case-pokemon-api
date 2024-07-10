@@ -13,6 +13,8 @@ import { TypeOfCharService } from '../type-of-char/type-of-char.service';
 import { AbilityOfCharService } from '../ability-of-char/ability-of-char.service';
 import { AbilityOfChar } from '../ability-of-char/entities/ability-of-char.entity';
 import { TypeOfChar } from '../type-of-char/entities/type-of-char.entity';
+import { QueryRunner } from 'typeorm';
+import { Char } from './entities/char.entity';
 
 @Injectable()
 export class CharService {
@@ -24,52 +26,10 @@ export class CharService {
     private readonly typeOfCharService: TypeOfCharService
   ) { }
 
-  async save(createCharDto: CreateCharDto) {
+  async save(createCharDto: CreateCharDto){
     try {
-      // Exist char
-      let char = await this.findOne({ name: createCharDto.name });
-      if (!char.status) {
-        return char;
-      } else if (char.data) {
-        return new ErrorDataResult('Char is exist!', null);
-      }
-
-      // Save char
-      let saveChar = await this.repository.save(createCharDto);
-
-      // Get types of char
-      let typeOfChar:CreateTypeOfCharDto[] = [];
-      for (let i = 0; i < createCharDto.charTypes.length; i++) {
-        const charType = createCharDto.charTypes[i];
-        let charTypeEntity = await this.charTypeService.save(charType);
-        if(charTypeEntity.status){
-          typeOfChar.push({charId: saveChar.id, typeId: charTypeEntity.data.id});
-        }
-      }
-
-      // Get abilities of char
-      let abilityOfChar:CreateAbilityOfCharDto[] = [];
-      for (let i = 0; i < createCharDto.abilities.length; i++) {
-        const charAbility = createCharDto.abilities[i];
-        let charAbilityEntity = await this.charAbilityService.save(charAbility);
-        if(charAbilityEntity.status){
-          abilityOfChar.push({charId: saveChar.id, abilityId: charAbilityEntity.data.id});
-        }
-      }
-
-      let results: (SuccessDataResult<AbilityOfChar[]> | ErrorDataResult<AbilityOfChar[]> | SuccessDataResult<TypeOfChar[]> | ErrorDataResult<TypeOfChar[]> )[]= [
-        await this.abilityOfCharService.saveMany(abilityOfChar), 
-        await this.typeOfCharService.saveMany(typeOfChar)
-      ];
-
-      for (let index = 0; index < results.length; index++) {
-        const result = results[index];
-        if(!result.status){
-          return new ErrorDataResult('', null);
-        }
-      }
-
-      return new SuccessDataResult('', {char: saveChar, relations: results});
+      let result = await this.repository.save(createCharDto);
+      return new SuccessDataResult('', result);
     } catch {
       return new ErrorDataResult('', null);
     }
@@ -78,6 +38,15 @@ export class CharService {
   async saveMany(createCharDto: CreateCharDto[]) {
     try {
       let result = await this.repository.saveMany(createCharDto);
+      return new SuccessDataResult('', result);
+    } catch {
+      return new ErrorDataResult('', null);
+    }
+  }
+
+  async saveOrUpdate(createCharDto: CreateCharDto){
+    try {
+      let result = await this.repository.saveOrUpdate(createCharDto);
       return new SuccessDataResult('', result);
     } catch {
       return new ErrorDataResult('', null);
