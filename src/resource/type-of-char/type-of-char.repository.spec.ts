@@ -1,25 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOfCharController } from './type-of-char.controller';
+import { TypeOfCharRepository } from './type-of-char.repository';
 import { TypeOfCharService } from './type-of-char.service';
 import { DatabaseModule } from 'src/database/typeorm/database.module';
-import { TypeOfCharRepository } from './type-of-char.repository';
 import { Repository } from 'typeorm';
 
-describe('TypeOfCharController', () => {
-  let controller: TypeOfCharController;
+describe('TypeOfCharRepository', () => {
+  let repository: TypeOfCharRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [DatabaseModule],
-      controllers: [TypeOfCharController],
+      controllers: [TypeOfCharRepository],
       providers: [TypeOfCharService, TypeOfCharRepository, Repository],
       exports: [TypeOfCharService, TypeOfCharRepository]
     }).compile();
 
-    controller = module.get<TypeOfCharController>(TypeOfCharController);
+    repository = module.get<TypeOfCharRepository>(TypeOfCharRepository);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(repository).toBeDefined();
   });
 });

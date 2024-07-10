@@ -4,8 +4,8 @@ import { ServiceModule } from 'src/service/service.module';
 import { CharModule } from '../char/char.module';
 import { PokemonService } from './pokemon.service';
 
-describe('PokemonApiController', () => {
-  let controller: PokemonController;
+describe('PokemonService', () => {
+  let controller: PokemonService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -14,7 +14,7 @@ describe('PokemonApiController', () => {
       providers: [PokemonService]
     }).compile();
 
-    controller = module.get<PokemonController>(PokemonController);
+    controller = module.get<PokemonService>(PokemonService);
   });
 
   it('should be defined', () => {

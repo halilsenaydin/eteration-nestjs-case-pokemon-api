@@ -1,12 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PokemonApiService } from './pokemon-api.service';
+import { HttpModule } from '@nestjs/axios';
 
 describe('PokemonApiService', () => {
   let service: PokemonApiService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       providers: [PokemonApiService],
+      exports: [PokemonApiService]
     }).compile();
 
     service = module.get<PokemonApiService>(PokemonApiService);
