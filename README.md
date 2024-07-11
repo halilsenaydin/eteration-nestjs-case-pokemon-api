@@ -35,6 +35,9 @@ $ npm install
 ## Running the app
 
 ```bash
+# start Postgre SQL DB
+$ docker-compose up
+
 # development
 $ npm run start
 
