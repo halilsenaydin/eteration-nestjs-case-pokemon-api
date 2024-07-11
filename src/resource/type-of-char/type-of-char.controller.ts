@@ -8,22 +8,28 @@ import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 @ApiTags('/type-of-char')
 @Controller('type-of-char')
 export class TypeOfCharController {
-  constructor(private readonly typeOfCharService: TypeOfCharService) {}
-
-  @Post()
-  create(@Body() createTypeOfCharDto: CreateTypeOfCharDto) {
-    return this.typeOfCharService.save(createTypeOfCharDto);
-  }
+  constructor(private readonly typeOfCharService: TypeOfCharService) { }
 
   @Get()
   findAll() {
     return this.typeOfCharService.findAll();
   }
 
+  @Get('/dto')
+  findAllDto() {
+    return this.typeOfCharService.findAllDto();
+  }
+
   @ApiParam({ name: 'id', example: '0394fdbd-f035-418d-8ad6-2a7c0bfe4482', description: 'The id of the type of char' })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.typeOfCharService.findOne({id: id});
+    return this.typeOfCharService.findOne({ id: id });
+  }
+
+  @ApiParam({ name: 'id', example: 'd4cc2b24-dd2e-4a56-a2cc-b50c7138b339', description: 'The charId of the type of char' })
+  @Get('/char/:id')
+  findAllByCharId(@Param('id') id: string) {
+    return this.typeOfCharService.findAllByDto({ charId: id });
   }
 
   @Patch(':id')

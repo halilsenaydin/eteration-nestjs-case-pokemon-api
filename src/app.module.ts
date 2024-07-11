@@ -11,6 +11,7 @@ import { PokemonApiModule } from './resource/pokemon/pokemon.module';
 
 @Module({
   imports: [
-    AuthModule, CharModule, DatabaseModule, CharTypeModule, ServiceModule, PokemonApiModule, CharAbilityModule, AbilityOfCharModule, TypeOfCharModule],
+    AuthModule, CharModule, DatabaseModule, CharTypeModule, ServiceModule, PokemonApiModule, CharAbilityModule, AbilityOfCharModule, TypeOfCharModule
+  ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -9,11 +9,11 @@ export class PokemonService {
   constructor(
     private readonly pokemonApiService: PokemonApiService,
     private readonly charService: CharService
-  ) {}
+  ) { }
 
   async syncSave(startId: number, endId: number) {
     let result = await this.pokemonApiService.getPokemons(startId, endId);
-    if(!result){
+    if (!result) {
       return result;
     }
 
@@ -44,13 +44,11 @@ export class PokemonService {
       }
 
       let savePokemon = await this.charService.saveOrUpdate(createCharDto);
-      if(savePokemon.status){
+      if (savePokemon.status) {
         savedPokemons.push(savePokemon.data)
-      }else{
-        console.log("Failed: ", pokemon.name, " -> ", savePokemon.message);
       }
     }
-    
+
     return new SuccessDataResult('', savedPokemons);
   }
 

@@ -2,6 +2,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:latest
+    container_name: postgresql_container
     environment:
       POSTGRES_DB: pokemon
       POSTGRES_USER: postgres

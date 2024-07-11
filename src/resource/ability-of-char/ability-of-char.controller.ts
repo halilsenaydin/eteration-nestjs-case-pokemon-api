@@ -8,12 +8,8 @@ import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 @ApiBearerAuth('jwt')
 @Controller('ability-of-char')
 export class AbilityOfCharController {
-  constructor(private readonly abilityOfCharService: AbilityOfCharService) {}
+  constructor(private readonly abilityOfCharService: AbilityOfCharService) { }
 
-  @Post()
-  create(@Body() createAbilityOfCharDto: CreateAbilityOfCharDto) {
-    return this.abilityOfCharService.save(createAbilityOfCharDto);
-  }
 
   @Get()
   findAll() {
@@ -28,7 +24,7 @@ export class AbilityOfCharController {
   @ApiParam({ name: 'id', example: '1a7cda5f-b535-48ba-b5e2-e953e5ad5481', description: 'The id of the ability of char' })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.abilityOfCharService.findOne({id: id});
+    return this.abilityOfCharService.findOne({ id: id });
   }
 
   @Patch(':id')

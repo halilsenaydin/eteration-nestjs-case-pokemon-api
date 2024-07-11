@@ -9,95 +9,77 @@ import { FilterTypeOfCharDto } from './dto/filter-type-of-char.dto';
 @Injectable()
 export class TypeOfCharService {
   constructor(
-    private readonly repository:TypeOfCharRepository
-  ) {}
-
-  async save(createDto: CreateTypeOfCharDto) {
-    try{
-      let result = await this.repository.save(createDto);
-      return new SuccessDataResult('', result);
-    }catch{
-      return new ErrorDataResult('', null);
-    }
-  }
-
-  async saveMany(createDto: CreateTypeOfCharDto[]) {
-    try{
-      let result = await this.repository.saveMany(createDto);
-      return new SuccessDataResult('', result);
-    }catch{
-      return new ErrorDataResult('', null);
-    }
-  }
+    private readonly repository: TypeOfCharRepository
+  ) { }
 
   async findAll() {
-    try{
+    try {
       let result = await this.repository.findAll();
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async findAllDto() {
-    try{
+    try {
       let result = await this.repository.findAllDto();
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async findAllBy(condition: FilterTypeOfCharDto) {
-    try{
+    try {
       let result = await this.repository.findAllBy(condition);
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async findAllByDto(condition: FilterTypeOfCharDto) {
-    try{
+    try {
       let result = await this.repository.findAllByDto(condition);
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async findOne(condition: FilterTypeOfCharDto) {
-    try{
+    try {
       let result = await this.repository.findOne(condition);
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async update(id: string, updateDto: UpdateTypeOfCharDto) {
-    try{
+    try {
       let result = await this.repository.update(id, updateDto);
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async remove(id: string) {
-    try{
+    try {
       let result = await this.repository.remove(id);
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
 
   async removeMany(ids: string[]) {
-    try{
+    try {
       let result = await this.repository.removeMany(ids);
       return new SuccessDataResult('', result);
-    }catch{
+    } catch {
       return new ErrorDataResult('', null);
     }
   }
