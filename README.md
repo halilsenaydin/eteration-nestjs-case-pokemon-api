@@ -26,6 +26,9 @@
 
 Eteration Nest Js Case
 
+### DB Design
+<img width="613" alt="image" src="https://github.com/halilsenaydin/eteration-nestjs-case-pokemon-api/assets/70847361/6abc5ee9-9080-4d58-a05d-887208e32eb9">
+
 ## Installation
 
 ```bash
@@ -37,6 +40,11 @@ $ npm install
 ```bash
 # start Postgre SQL DB
 $ docker-compose up
+
+# restore datas
+$ docker cp pokemon_backup.sql postgresql_container:/pokemon_backup.sql
+$ docker exec -it postgresql_container bash
+$ psql -U postgres -d pokemon -f /pokemon_backup.sql
 
 # development
 $ npm run start
