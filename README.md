@@ -29,6 +29,9 @@ Eteration Nest Js Case
 ### DB Design
 <img width="613" alt="image" src="https://github.com/halilsenaydin/eteration-nestjs-case-pokemon-api/assets/70847361/6abc5ee9-9080-4d58-a05d-887208e32eb9">
 
+## Swagger Doc
+Swagger Doc URL: localhost:3001/doc
+
 ## Installation
 
 ```bash
