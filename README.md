@@ -24,7 +24,10 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Eteration Nest Js Case
+
+### DB Design
+<img width="613" alt="image" src="https://github.com/halilsenaydin/eteration-nestjs-case-pokemon-api/assets/70847361/6abc5ee9-9080-4d58-a05d-887208e32eb9">
 
 ## Installation
 
@@ -35,6 +38,14 @@ $ npm install
 ## Running the app
 
 ```bash
+# start Postgre SQL DB
+$ docker-compose up
+
+# restore datas
+$ docker cp pokemon_backup.sql postgresql_container:/pokemon_backup.sql
+$ docker exec -it postgresql_container bash
+$ psql -U postgres -d pokemon -f /pokemon_backup.sql
+
 # development
 $ npm run start
 
@@ -58,15 +69,12 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Test Coverage
+<img width="752" alt="image" src="https://github.com/halilsenaydin/eteration-nestjs-case-pokemon-api/assets/70847361/98e91ab6-b40d-4168-8d87-e3414eb5900b">
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Halil İbrahim ŞENAYDIN](https://www.linkedin.com/in/halilsenaydin/)
 
 ## License
 
