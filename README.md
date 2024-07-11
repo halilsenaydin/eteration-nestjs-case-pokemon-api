@@ -58,6 +58,9 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+### Test Coverage
+<img width="752" alt="image" src="https://github.com/halilsenaydin/eteration-nestjs-case-pokemon-api/assets/70847361/98e91ab6-b40d-4168-8d87-e3414eb5900b">
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
